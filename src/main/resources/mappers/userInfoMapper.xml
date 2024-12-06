@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.darling.easylive.Mapper.userAccountMapper">
+
+    <insert id="register" parameterType="com.darling.easylive.Pojo.user">
+        INSERT INTO user (
+        username,
+        password,
+        nickname,
+        avatar,
+        background,
+        gender,
+        description,
+        exp,
+        coin,
+        vip,
+        state,
+        role,
+        auth,
+        authMsg,
+        createDate,
+        deleteDate
+        )
+        VALUES (
+        #{username},
+        #{password},
+        #{nickname},
+        #{avatar},
+        #{background},
+        #{gender},
+        #{description},
+        #{exp},
+        #{coin},
+        #{vip},
+        #{state},
+        #{role},
+        #{auth},
+        #{authMsg},
+        #{createDate},
+        #{deleteDate}
+        )
+    </insert>
+
+    <select id="getUserInfo" resultType="com.darling.easylive.Pojo.user">
+        select * from user where username=#{username} and password=#{password}
+    </select>
+
+
+</mapper>
