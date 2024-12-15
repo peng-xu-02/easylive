@@ -1,8 +1,8 @@
 package com.darling.easylive.Controller.userController;
 
 
-import com.darling.easylive.Pojo.dto.ResponseDto;
 import com.darling.easylive.Service.userAccountService;
+import com.darling.easylive.Utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,11 +14,11 @@ import java.util.Map;
 @RestController
 public class userAccountController {
     @Autowired
-    private userAccountService userAccountService;
+    private com.darling.easylive.Service.userAccountService userAccountService;
 
 
     @PostMapping("/user/account/register")
-    public ResponseDto register(@RequestBody Map<String,String> usermap){
+    public Result register(@RequestBody Map<String,String> usermap){
         String username=usermap.get("username");
         String password=usermap.get("password");
        return userAccountService.register(username,password,password);
@@ -26,10 +26,16 @@ public class userAccountController {
     }
 
     @GetMapping("/user/account/login")
-    public ResponseDto login(@RequestBody Map<String,String> usermap){
+    public Result login(@RequestBody Map<String,String> usermap){
         String username=usermap.get("username");
         String password=usermap.get("password");
         return userAccountService.login(username,password);
     }
+
+    @GetMapping("/test")
+        public String test(){
+            return "hello";
+        }
+
 
 }
