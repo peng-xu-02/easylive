@@ -2,12 +2,12 @@ package com.teriteri.backend.service.impl.comment;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.teriteri.backend.im.IMServer;
+//import com.teriteri.backend.im.IMServer;
 import com.teriteri.backend.mapper.CommentMapper;
 import com.teriteri.backend.mapper.VideoMapper;
 import com.teriteri.backend.pojo.*;
 import com.teriteri.backend.service.comment.CommentService;
-import com.teriteri.backend.service.message.MsgUnreadService;
+//import com.teriteri.backend.service.message.MsgUnreadService;
 import com.teriteri.backend.service.user.UserService;
 import com.teriteri.backend.service.video.VideoStatsService;
 import com.teriteri.backend.utils.RedisUtil;
@@ -42,8 +42,8 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MsgUnreadService msgUnreadService;
+//    @Autowired
+//    private MsgUnreadService msgUnreadService;
 
     @Autowired
     @Qualifier("taskExecutor")
@@ -156,17 +156,17 @@ public class CommentServiceImpl implements CommentService {
                 // 如果不是回复自己
                 if(!Objects.equals(comment.getToUserId(), comment.getUid())) {
                     redisUtil.zset("reply_zset:" + comment.getToUserId(), comment.getId());
-                    msgUnreadService.addOneUnread(comment.getToUserId(), "reply");
+                  //  msgUnreadService.addOneUnread(comment.getToUserId(), "reply");
 
                     // netty 通知未读消息
                     Map<String, Object> map = new HashMap<>();
                     map.put("type", "接收");
-                    Set<Channel> myChannels = IMServer.userChannel.get(comment.getToUserId());
-                    if (myChannels != null) {
-                        for (Channel channel: myChannels) {
-                            channel.writeAndFlush(IMResponse.message("reply", map));
-                        }
-                    }
+                   // Set<Channel> myChannels = IMServer.userChannel.get(comment.getToUserId());
+//                    if (myChannels != null) {
+//                        for (Channel channel: myChannels) {
+//                            channel.writeAndFlush(IMResponse.message("reply", map));
+//                        }
+//                    }
                 }
             }, taskExecutor);
         } catch (Exception e) {

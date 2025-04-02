@@ -2,19 +2,19 @@ package com.teriteri.backend.service.impl.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.teriteri.backend.im.IMServer;
+//import com.teriteri.backend.im.IMServer;
 import com.teriteri.backend.mapper.FavoriteMapper;
-import com.teriteri.backend.mapper.MsgUnreadMapper;
+//import com.teriteri.backend.mapper.MsgUnreadMapper;
 import com.teriteri.backend.mapper.UserMapper;
 import com.teriteri.backend.pojo.CustomResponse;
 import com.teriteri.backend.pojo.Favorite;
-import com.teriteri.backend.pojo.MsgUnread;
+//import com.teriteri.backend.pojo.MsgUnread;
 import com.teriteri.backend.pojo.User;
 import com.teriteri.backend.pojo.dto.UserDTO;
 import com.teriteri.backend.service.user.UserAccountService;
 import com.teriteri.backend.service.user.UserService;
 import com.teriteri.backend.service.utils.CurrentUser;
-import com.teriteri.backend.utils.ESUtil;
+//import com.teriteri.backend.utils.ESUtil;
 import com.teriteri.backend.utils.JwtUtil;
 import com.teriteri.backend.utils.RedisUtil;
 import io.netty.channel.*;
@@ -44,8 +44,8 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private MsgUnreadMapper msgUnreadMapper;
+//    @Autowired
+//    private MsgUnreadMapper msgUnreadMapper;
 
     @Autowired
     private FavoriteMapper favoriteMapper;
@@ -56,8 +56,8 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private ESUtil esUtil;
+//    @Autowired
+//    private ESUtil esUtil;
 
     @Autowired
     private CurrentUser currentUser;
@@ -163,9 +163,9 @@ public class UserAccountServiceImpl implements UserAccountService {
                 null
         );
         userMapper.insert(new_user);
-        msgUnreadMapper.insert(new MsgUnread(new_user.getUid(),0,0,0,0,0,0));
+       // msgUnreadMapper.insert(new MsgUnread(new_user.getUid(),0,0,0,0,0,0));
         favoriteMapper.insert(new Favorite(null, new_user.getUid(), 1, 1, null, "默认收藏夹", "", 0, null));
-        esUtil.addUser(new_user);
+       // esUtil.addUser(new_user);
         customResponse.setMessage("注册成功！欢迎加入T站");
         return customResponse;
     }
@@ -397,18 +397,18 @@ public class UserAccountServiceImpl implements UserAccountService {
         redisUtil.deleteKeysWithPrefix("whisper:" + LoginUserId + ":"); // 清除全部在聊天窗口的状态
 
         // 断开全部该用户的channel 并从 userChannel 移除该用户
-        Set<Channel> userChannels = IMServer.userChannel.get(LoginUserId);
-        if (userChannels != null) {
-            for (Channel channel : userChannels) {
-                try {
-                    channel.close().sync(); // 等待通道关闭完成
-                } catch (InterruptedException e) {
-                    // 处理异常，如果有必要的话
-                    e.printStackTrace();
-                }
-            }
-            IMServer.userChannel.remove(LoginUserId);
-        }
+       // Set<Channel> userChannels = IMServer.userChannel.get(LoginUserId);
+//        if (userChannels != null) {
+//            for (Channel channel : userChannels) {
+//                try {
+//                    channel.close().sync(); // 等待通道关闭完成
+//                } catch (InterruptedException e) {
+//                    // 处理异常，如果有必要的话
+//                    e.printStackTrace();
+//                }
+//            }
+//            IMServer.userChannel.remove(LoginUserId);
+//        }
     }
 
     /**

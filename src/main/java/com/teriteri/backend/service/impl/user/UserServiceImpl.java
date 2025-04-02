@@ -9,7 +9,7 @@ import com.teriteri.backend.pojo.VideoStats;
 import com.teriteri.backend.pojo.dto.UserDTO;
 import com.teriteri.backend.service.user.UserService;
 import com.teriteri.backend.service.video.VideoStatsService;
-import com.teriteri.backend.utils.ESUtil;
+//import com.teriteri.backend.utils.ESUtil;
 import com.teriteri.backend.utils.OssUtil;
 import com.teriteri.backend.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RedisUtil redisUtil;
 
-    @Autowired
-    private ESUtil esUtil;
+//    @Autowired
+//    private ESUtil esUtil;
 
     @Autowired
     private OssUtil ossUtil;
@@ -219,7 +219,7 @@ public class UserServiceImpl implements UserService {
         User new_user = new User();
         new_user.setUid(uid);
         new_user.setNickname(nickname);
-        esUtil.updateUser(new_user);
+        //esUtil.updateUser(new_user);
         redisUtil.delValue("user:" + uid);
         return customResponse;
     }

@@ -6,7 +6,7 @@ import com.teriteri.backend.mapper.VideoStatsMapper;
 import com.teriteri.backend.pojo.Video;
 import com.teriteri.backend.pojo.VideoStats;
 import com.teriteri.backend.pojo.dto.VideoUploadInfoDTO;
-import com.teriteri.backend.utils.ESUtil;
+//import com.teriteri.backend.utils.ESUtil;
 import com.teriteri.backend.utils.OssUtil;
 import com.teriteri.backend.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -47,8 +47,8 @@ public class DirectVideoUploadConsumer {
     @Autowired
     private OssUtil ossUtil;
 
-    @Autowired
-    private ESUtil esUtil;
+//    @Autowired
+//    private ESUtil esUtil;
 
     @Autowired
     @Qualifier("taskExecutor")
@@ -136,7 +136,7 @@ public class DirectVideoUploadConsumer {
 
         VideoStats videoStats = new VideoStats(video.getVid(),0,0,0,0,0,0,0,0);
         videoStatsMapper.insert(videoStats);
-        esUtil.addVideo(video);
+       // esUtil.addVideo(video);
         CompletableFuture.runAsync(() -> redisUtil.setExObjectValue("video:" + video.getVid(), video), taskExecutor);
         CompletableFuture.runAsync(() -> redisUtil.addMember("video_status:0", video.getVid()), taskExecutor);
         CompletableFuture.runAsync(() -> redisUtil.setExObjectValue("videoStats:" + video.getVid(), videoStats), taskExecutor);

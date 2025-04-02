@@ -2,13 +2,13 @@ package com.teriteri.backend.service.impl.video;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.teriteri.backend.im.IMServer;
+//import com.teriteri.backend.im.IMServer;
 import com.teriteri.backend.mapper.UserVideoMapper;
 import com.teriteri.backend.mapper.VideoMapper;
-import com.teriteri.backend.pojo.IMResponse;
+//mport com.teriteri.backend.pojo.IMResponse;
 import com.teriteri.backend.pojo.UserVideo;
 import com.teriteri.backend.pojo.Video;
-import com.teriteri.backend.service.message.MsgUnreadService;
+//import com.teriteri.backend.service.message.MsgUnreadService;
 import com.teriteri.backend.service.video.UserVideoService;
 import com.teriteri.backend.service.video.VideoStatsService;
 import com.teriteri.backend.utils.RedisUtil;
@@ -30,8 +30,8 @@ public class UserVideoServiceImpl implements UserVideoService {
     @Autowired
     private VideoStatsService videoStatsService;
 
-    @Autowired
-    private MsgUnreadService msgUnreadService;
+//    @Autowired
+//    private MsgUnreadService msgUnreadService;
 
     @Autowired
     private VideoMapper videoMapper;
@@ -122,16 +122,16 @@ public class UserVideoServiceImpl implements UserVideoService {
                 if(!Objects.equals(video.getUid(), uid)) {
                     // 更新最新被点赞的视频
                     redisUtil.zset("be_loved_zset:" + video.getUid(), vid);
-                    msgUnreadService.addOneUnread(video.getUid(), "love");
+                    //msgUnreadService.addOneUnread(video.getUid(), "love");
                     // netty 通知未读消息
                     Map<String, Object> map = new HashMap<>();
                     map.put("type", "接收");
-                    Set<Channel> channels = IMServer.userChannel.get(video.getUid());
-                    if (channels != null) {
-                        for (Channel channel: channels) {
-                            channel.writeAndFlush(IMResponse.message("love", map));
-                        }
-                    }
+                  //  Set<Channel> channels = IMServer.userChannel.get(video.getUid());
+//                    if (channels != null) {
+//                        for (Channel channel: channels) {
+//                            channel.writeAndFlush(IMResponse.message("love", map));
+//                        }
+//                    }
                 }
             }, taskExecutor);
         } else if (isLove) {

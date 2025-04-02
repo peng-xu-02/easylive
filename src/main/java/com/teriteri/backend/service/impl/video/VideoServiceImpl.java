@@ -12,7 +12,7 @@ import com.teriteri.backend.service.user.UserService;
 import com.teriteri.backend.service.utils.CurrentUser;
 import com.teriteri.backend.service.video.VideoService;
 import com.teriteri.backend.service.video.VideoStatsService;
-import com.teriteri.backend.utils.ESUtil;
+//import com.teriteri.backend.utils.ESUtil;
 import com.teriteri.backend.utils.OssUtil;
 import com.teriteri.backend.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -60,8 +60,8 @@ public class VideoServiceImpl implements VideoService {
     @Autowired
     private OssUtil ossUtil;
 
-    @Autowired
-    private ESUtil esUtil;
+//    @Autowired
+//    private ESUtil esUtil;
 
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
@@ -373,7 +373,7 @@ public class VideoServiceImpl implements VideoService {
                 int flag = videoMapper.update(null, updateWrapper);
                 if (flag > 0) {
                     // 更新成功
-                    esUtil.updateVideo(video);  // 更新ES视频文档
+                    //esUtil.updateVideo(video);  // 更新ES视频文档
                     redisUtil.delMember("video_status:" + lastStatus, vid);     // 从旧状态移除
                     redisUtil.addMember("video_status:1", vid);     // 加入新状态
                     redisUtil.zset("user_video_upload:" + video.getUid(), video.getVid());
@@ -403,7 +403,7 @@ public class VideoServiceImpl implements VideoService {
                 int flag = videoMapper.update(null, updateWrapper);
                 if (flag > 0) {
                     // 更新成功
-                    esUtil.updateVideo(video);  // 更新ES视频文档
+                    //esUtil.updateVideo(video);  // 更新ES视频文档
                     redisUtil.delMember("video_status:" + lastStatus, vid);     // 从旧状态移除
                     redisUtil.addMember("video_status:2", vid);     // 加入新状态
                     redisUtil.zsetDelMember("user_video_upload:" + video.getUid(), video.getVid());
@@ -436,7 +436,7 @@ public class VideoServiceImpl implements VideoService {
                 int flag = videoMapper.update(null, updateWrapper);
                 if (flag > 0) {
                     // 更新成功
-                    esUtil.deleteVideo(vid);
+                    //esUtil.deleteVideo(vid);
                     redisUtil.delMember("video_status:" + lastStatus, vid);     // 从旧状态移除
                     redisUtil.delValue("video:" + vid);     // 删除旧的视频信息
                     redisUtil.delValue("danmu_idset:" + vid);   // 删除该视频的弹幕
